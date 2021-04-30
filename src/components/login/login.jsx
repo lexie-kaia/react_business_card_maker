@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './login.module.css';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 
@@ -10,18 +11,18 @@ const Login = ({ authService }) => {
       .then(console.log);
   };
   return (
-    <section>
+    <section className={styles.login}>
       <Header />
       <section>
-        <h1>Login</h1>
-        <ul>
-          <li>
-            <button type="button" onClick={onLogin}>
+        <h2>Login</h2>
+        <ul className={styles.list}>
+          <li className={styles.item}>
+            <button className={styles.button} type="button" onClick={onLogin}>
               Google
             </button>
           </li>
-          <li>
-            <button type="button" onClick={onLogin}>
+          <li className={styles.item}>
+            <button className={styles.button} type="button" onClick={onLogin}>
               Github
             </button>
           </li>

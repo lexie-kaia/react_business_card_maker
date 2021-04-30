@@ -1,0 +1,46 @@
+@value makerGrey from '../../styles/color.css';
+
+.form {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  border-top: 1px solid makerGrey;
+  border-left: 1px solid makerGrey;
+  margin-bottom: 1em;
+}
+
+.input,
+.select,
+.textarea,
+.button,
+.fileInput {
+  width: 100%;
+  border: 0;
+  padding: 0.5em;
+  border-bottom: 1px solid makerGrey;
+  border-right: 1px solid makerGrey;
+  font-size: 0.8rem;
+}
+
+.input,
+.select {
+  flex: 1 1 30%;
+}
+
+.fileInput,
+.button {
+  padding: 0;
+  flex: 1 1 50%;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus,
+.button:focus,
+.fileInput:focus {
+  outline: 0;
+}
+
+.textarea {
+  flex-basis: 100%;
+}

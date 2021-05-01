@@ -3,16 +3,7 @@ import styles from './edit_form.module.css';
 import Button from '../button/button';
 
 const EditForm = ({ FileInput, card, updateCard, deleteCard }) => {
-  const {
-    name,
-    company,
-    title,
-    email,
-    message,
-    avatarFileName,
-    avatarFileUrl,
-    theme,
-  } = card;
+  const { name, company, title, email, message, avatarFileName, theme } = card;
 
   const formRef = useRef();
   const nameRef = useRef();

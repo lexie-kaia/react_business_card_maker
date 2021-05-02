@@ -1,19 +1,30 @@
-import { firebaseInstance, firebaseApp } from './firebase';
+import { firebaseAuth, githubProvider, googleProvider } from './firebase';
 
 class AuthService {
   login(providerName) {
-    const provider = new firebaseInstance.auth[`${providerName}AuthProvider`]();
-    return firebaseApp.auth().signInWithPopup(provider);
+    const provider = this.getProvider(providerName);
+    return firebaseAuth.signInWithPopup(provider);
   }
 
   logout() {
-    firebaseApp.auth().signOut();
+    firebaseAuth.signOut();
   }
 
   onAuthStateChanged(onAuthStateChange) {
-    firebaseApp.auth().onAuthStateChanged((user) => {
+    firebaseAuth.onAuthStateChanged((user) => {
       onAuthStateChange(user);
     });
+  }
+
+  getProvider(providerName) {
+    switch (providerName) {
+      case 'Google':
+        return googleProvider;
+      case 'Github':
+        return githubProvider;
+      default:
+        throw new Error(`not supported provider: ${providerName}`);
+    }
   }
 }
 

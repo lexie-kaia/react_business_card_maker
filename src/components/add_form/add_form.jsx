@@ -38,7 +38,6 @@ const AddForm = ({ FileInput, addCard }) => {
       theme: themeRef.current.value,
     };
     addCard(card);
-    console.log(card);
     setFile({
       name: null,
       url: null,

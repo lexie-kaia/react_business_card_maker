@@ -14,7 +14,6 @@ const Login = ({ authService }) => {
   };
 
   const onLogin = (event) => {
-    console.log(event.currentTarget.textContent);
     authService //
       .login(event.currentTarget.textContent)
       .then((result) => goToMaker(result.user.uid));

@@ -6,44 +6,45 @@ import Editor from '../editor/editor';
 import Preview from '../preview/preview';
 import { useHistory } from 'react-router';
 
-const Maker = ({ FileInput, authService }) => {
-  const [cards, setCards] = useState({
-    1: {
-      id: '1',
-      name: 'Lexie',
-      company: 'Google',
-      title: 'Software Engineer',
-      email: 'lexie@gmail.com',
-      message: 'go for it',
-      avatarFileName: '1',
-      avatarFileUrl: null,
-      theme: 'light',
-    },
-    2: {
-      id: '2',
-      name: 'Kaia',
-      company: 'Google',
-      title: 'Software Engineer',
-      email: 'lexie@gmail.com',
-      message: 'go for it',
-      avatarFileName: '1',
-      avatarFileUrl: null,
-      theme: 'dark',
-    },
-    3: {
-      id: '3',
-      name: 'Ellie',
-      company: 'Google',
-      title: 'Software Engineer',
-      email: 'lexie@gmail.com',
-      message: 'go for it',
-      avatarFileName: '1',
-      avatarFileUrl: null,
-      theme: 'colorful',
-    },
-  });
-
+const Maker = ({ FileInput, authService, cardRepository }) => {
   const history = useHistory();
+
+  const [cards, setCards] = useState({
+    // 1: {
+    //   id: '1',
+    //   name: 'Lexie',
+    //   company: 'Google',
+    //   title: 'Software Engineer',
+    //   email: 'lexie@gmail.com',
+    //   message: 'go for it',
+    //   avatarFileName: '1',
+    //   avatarFileUrl: null,
+    //   theme: 'light',
+    // },
+    // 2: {
+    //   id: '2',
+    //   name: 'Kaia',
+    //   company: 'Google',
+    //   title: 'Software Engineer',
+    //   email: 'lexie@gmail.com',
+    //   message: 'go for it',
+    //   avatarFileName: '1',
+    //   avatarFileUrl: null,
+    //   theme: 'dark',
+    // },
+    // 3: {
+    //   id: '3',
+    //   name: 'Ellie',
+    //   company: 'Google',
+    //   title: 'Software Engineer',
+    //   email: 'lexie@gmail.com',
+    //   message: 'go for it',
+    //   avatarFileName: '1',
+    //   avatarFileUrl: null,
+    //   theme: 'colorful',
+    // },
+  });
+  const [userId, setUserId] = useState(null);
 
   const onLogout = () => {
     authService.logout();
@@ -51,10 +52,21 @@ const Maker = ({ FileInput, authService }) => {
 
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
-      if (!user) {
+      if (user) {
+        setUserId(user.uid);
+      } else {
         history.push('/');
       }
     });
+  });
+
+  useEffect(() => {
+    if (!userId) return;
+    const stopSync = cardRepository.syncCards(userId, (cards) =>
+      setCards(cards)
+    );
+
+    return () => stopSync();
   });
 
   const addOrUpdateCard = (card) => {
@@ -63,6 +75,7 @@ const Maker = ({ FileInput, authService }) => {
       updated[card.id] = card;
       return updated;
     });
+    cardRepository.saveCard(userId, card);
   };
 
   const deleteCard = (card) => {
@@ -71,6 +84,7 @@ const Maker = ({ FileInput, authService }) => {
       delete updated[card.id];
       return updated;
     });
+    cardRepository.removeCard(userId, card);
   };
 
   return (

@@ -17,23 +17,14 @@ const getStyleTheme = (theme) => {
 };
 
 const Card = ({ card }) => {
-  const {
-    name,
-    company,
-    title,
-    email,
-    message,
-    avatarFileName,
-    avatarFileUrl,
-    theme,
-  } = card;
+  const { name, company, title, email, message, avatarFileUrl, theme } = card;
 
   return (
     <li className={`${styles.card} ${getStyleTheme(theme)}`}>
       <img
         className={styles.avatar}
         src={avatarFileUrl ? avatarFileUrl : DEFAULT_IMAGE_URL}
-        alt={avatarFileName}
+        alt="profile"
       />
       <div className={styles.info}>
         <h4 className={styles.name}>{name}</h4>
